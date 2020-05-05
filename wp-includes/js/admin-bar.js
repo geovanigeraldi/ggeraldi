@@ -1,1 +1,464 @@
-if(typeof(jQuery)!="undefined"){if(typeof(jQuery.fn.hoverIntent)=="undefined"){(function(b){b.fn.hoverIntent=function(p,r){var g={sensitivity:7,interval:100,timeout:0};g=b.extend(g,r?{over:p,out:r}:p);var a,f,t,v;var u=function(c){a=c.pageX;f=c.pageY};var w=function(c,d){d.hoverIntent_t=clearTimeout(d.hoverIntent_t);if((Math.abs(t-a)+Math.abs(v-f))<g.sensitivity){b(d).unbind("mousemove",u);d.hoverIntent_s=1;return g.over.apply(d,[c])}else{t=a;v=f;d.hoverIntent_t=setTimeout(function(){w(c,d)},g.interval)}};var s=function(c,d){d.hoverIntent_t=clearTimeout(d.hoverIntent_t);d.hoverIntent_s=0;return g.out.apply(d,[c])};var x=function(e){var d=this;var c=(e.type=="mouseover"?e.fromElement:e.toElement)||e.relatedTarget;while(c&&c!=this){try{c=c.parentNode}catch(e){c=this}}if(c==this){if(b.browser.mozilla){if(e.type=="mouseout"){d.mtout=setTimeout(function(){q(e,d)},30)}else{if(d.mtout){d.mtout=clearTimeout(d.mtout)}}}return}else{if(d.mtout){d.mtout=clearTimeout(d.mtout)}q(e,d)}};var q=function(e,d){var c=jQuery.extend({},e);if(d.hoverIntent_t){d.hoverIntent_t=clearTimeout(d.hoverIntent_t)}if(e.type=="mouseover"){t=c.pageX;v=c.pageY;b(d).bind("mousemove",u);if(d.hoverIntent_s!=1){d.hoverIntent_t=setTimeout(function(){w(c,d)},g.interval)}}else{b(d).unbind("mousemove",u);if(d.hoverIntent_s==1){d.hoverIntent_t=setTimeout(function(){s(c,d)},g.timeout)}}};return this.mouseover(x).mouseout(x)}})(jQuery)}jQuery(document).ready(function(b){var a=function(c,e){var f=b(e),d=f.attr("tabindex");if(d){f.attr("tabindex","0").attr("tabindex",d)}};b("#wpadminbar").removeClass("nojq").removeClass("nojs").find("li.menupop").hoverIntent({over:function(c){b(this).addClass("hover")},out:function(c){b(this).removeClass("hover")},timeout:180,sensitivity:7,interval:100});b("#wp-admin-bar-get-shortlink").click(function(c){c.preventDefault();b(this).addClass("selected").children(".shortlink-input").blur(function(){b(this).parents("#wp-admin-bar-get-shortlink").removeClass("selected")}).focus().select()});b("#wpadminbar li.menupop > .ab-item").bind("keydown.adminbar",function(f){if(f.which!=13){return}var d=b(f.target),c=d.closest("ab-sub-wrapper");f.stopPropagation();f.preventDefault();if(!c.length){c=b("#wpadminbar .quicklinks")}c.find(".menupop").removeClass("hover");d.parent().toggleClass("hover");d.siblings(".ab-sub-wrapper").find(".ab-item").each(a)}).each(a);b("#wpadminbar .ab-item").bind("keydown.adminbar",function(d){if(d.which!=27){return}var c=b(d.target);d.stopPropagation();d.preventDefault();c.closest(".hover").removeClass("hover").children(".ab-item").focus();c.siblings(".ab-sub-wrapper").find(".ab-item").each(a)});b("#wpadminbar").click(function(c){if(c.target.id!="wpadminbar"&&c.target.id!="wp-admin-bar-top-secondary"){return}c.preventDefault();b("html, body").animate({scrollTop:0},"fast")})})}else{(function(j,l){var e=function(o,n,d){if(o.addEventListener){o.addEventListener(n,d,false)}else{if(o.attachEvent){o.attachEvent("on"+n,function(){return d.call(o,window.event)})}}},f,g=new RegExp("\\bhover\\b","g"),b=[],k=new RegExp("\\bselected\\b","g"),h=function(n){var d=b.length;while(d--){if(b[d]&&n==b[d][1]){return b[d][0]}}return false},i=function(u){var o,d,r,n,q,s,v=[],p=0;while(u&&u!=f&&u!=j){if("LI"==u.nodeName.toUpperCase()){v[v.length]=u;d=h(u);if(d){clearTimeout(d)}u.className=u.className?(u.className.replace(g,"")+" hover"):"hover";n=u}u=u.parentNode}if(n&&n.parentNode){q=n.parentNode;if(q&&"UL"==q.nodeName.toUpperCase()){o=q.childNodes.length;while(o--){s=q.childNodes[o];if(s!=n){s.className=s.className?s.className.replace(k,""):""}}}}o=b.length;while(o--){r=false;p=v.length;while(p--){if(v[p]==b[o][1]){r=true}}if(!r){b[o][1].className=b[o][1].className?b[o][1].className.replace(g,""):""}}},m=function(d){while(d&&d!=f&&d!=j){if("LI"==d.nodeName.toUpperCase()){(function(n){var o=setTimeout(function(){n.className=n.className?n.className.replace(g,""):""},500);b[b.length]=[o,n]})(d)}d=d.parentNode}},c=function(q){var o,d,p,n=q.target||q.srcElement;while(true){if(!n||n==j||n==f){return}if(n.id&&n.id=="wp-admin-bar-get-shortlink"){break}n=n.parentNode}if(q.preventDefault){q.preventDefault()}q.returnValue=false;if(-1==n.className.indexOf("selected")){n.className+=" selected"}for(o=0,d=n.childNodes.length;o<d;o++){p=n.childNodes[o];if(p.className&&-1!=p.className.indexOf("shortlink-input")){p.focus();p.select();p.onblur=function(){n.className=n.className?n.className.replace(k,""):""};break}}return false},a=function(n){var s,q,p,d,r,o;if(n.id!="wpadminbar"&&n.id!="wp-admin-bar-top-secondary"){return}s=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0;if(s<1){return}o=s>800?130:100;q=Math.min(12,Math.round(s/o));p=s>800?Math.round(s/30):Math.round(s/20);d=[];r=0;while(s){s-=p;if(s<0){s=0}d.push(s);setTimeout(function(){window.scrollTo(0,d.shift())},r*q);r++}};e(l,"load",function(){f=j.getElementById("wpadminbar");if(j.body&&f){j.body.appendChild(f);if(f.className){f.className=f.className.replace(/nojs/,"")}e(f,"mouseover",function(d){i(d.target||d.srcElement)});e(f,"mouseout",function(d){m(d.target||d.srcElement)});e(f,"click",c);e(f,"click",function(d){a(d.target||d.srcElement)})}if(l.location.hash){l.scrollBy(0,-32)}})})(document,window)};
+/**
+ * @output wp-includes/js/admin-bar.js
+ */
+/**
+ * Admin bar with Vanilla JS, no external dependencies.
+ *
+ * @since 5.3.1
+ *
+ * @param {Object} document  The document object.
+ * @param {Object} window    The window object.
+ * @param {Object} navigator The navigator object.
+ *
+ * @return {void}
+ */
+( function( document, window, navigator ) {
+	document.addEventListener( 'DOMContentLoaded', function() {
+		var adminBar = document.getElementById( 'wpadminbar' ),
+			topMenuItems,
+			allMenuItems,
+			adminBarLogout,
+			adminBarSearchForm,
+			shortlink,
+			skipLink,
+			mobileEvent,
+			fontFaceRegex,
+			adminBarSearchInput,
+			i;
+
+		if ( ! adminBar || ! ( 'querySelectorAll' in adminBar ) ) {
+			return;
+		}
+
+		topMenuItems = adminBar.querySelectorAll( 'li.menupop' );
+		allMenuItems = adminBar.querySelectorAll( '.ab-item' );
+		adminBarLogout = document.getElementById( 'wp-admin-bar-logout' );
+		adminBarSearchForm = document.getElementById( 'adminbarsearch' );
+		shortlink = document.getElementById( 'wp-admin-bar-get-shortlink' );
+		skipLink = adminBar.querySelector( '.screen-reader-shortcut' );
+		mobileEvent = /Mobile\/.+Safari/.test( navigator.userAgent ) ? 'touchstart' : 'click';
+		fontFaceRegex = /Android (1.0|1.1|1.5|1.6|2.0|2.1)|Nokia|Opera Mini|w(eb)?OSBrowser|webOS|UCWEB|Windows Phone OS 7|XBLWP7|ZuneWP7|MSIE 7/;
+
+		// Remove nojs class after the DOM is loaded.
+		removeClass( adminBar, 'nojs' );
+
+		if ( 'ontouchstart' in window ) {
+			// Remove hover class when the user touches outside the menu items.
+			document.body.addEventListener( mobileEvent, function( e ) {
+				if ( ! getClosest( e.target, 'li.menupop' ) ) {
+					removeAllHoverClass( topMenuItems );
+				}
+			} );
+
+			// Add listener for menu items to toggle hover class by touches.
+			// Remove the callback later for better performance.
+			adminBar.addEventListener( 'touchstart', function bindMobileEvents() {
+				for ( var i = 0; i < topMenuItems.length; i++ ) {
+					topMenuItems[i].addEventListener( 'click', mobileHover.bind( null, topMenuItems ) );
+				}
+
+				adminBar.removeEventListener( 'touchstart', bindMobileEvents );
+			} );
+		}
+
+		// Scroll page to top when clicking on the admin bar.
+		adminBar.addEventListener( 'click', scrollToTop );
+
+		for ( i = 0; i < topMenuItems.length; i++ ) {
+			// Adds or removes the hover class based on the hover intent.
+			window.hoverintent(
+				topMenuItems[i],
+				addClass.bind( null, topMenuItems[i], 'hover' ),
+				removeClass.bind( null, topMenuItems[i], 'hover' )
+			).options( {
+				timeout: 180
+			} );
+
+			// Toggle hover class if the enter key is pressed.
+			topMenuItems[i].addEventListener( 'keydown', toggleHoverIfEnter );
+		}
+
+		// Remove hover class if the escape key is pressed.
+		for ( i = 0; i < allMenuItems.length; i++ ) {
+			allMenuItems[i].addEventListener( 'keydown', removeHoverIfEscape );
+		}
+
+		if ( adminBarSearchForm ) {
+			adminBarSearchInput = document.getElementById( 'adminbar-search' );
+
+			// Adds the adminbar-focused class on focus.
+			adminBarSearchInput.addEventListener( 'focus', function() {
+				addClass( adminBarSearchForm, 'adminbar-focused' );
+			} );
+
+			// Removes the adminbar-focused class on blur.
+			adminBarSearchInput.addEventListener( 'blur', function() {
+				removeClass( adminBarSearchForm, 'adminbar-focused' );
+			} );
+		}
+
+		if ( skipLink ) {
+			// Focus the target of skip link after pressing Enter.
+			skipLink.addEventListener( 'keydown', focusTargetAfterEnter );
+		}
+
+		if ( shortlink ) {
+			shortlink.addEventListener( 'click', clickShortlink );
+		}
+
+		// Prevents the toolbar from covering up content when a hash is present in the URL.
+		if ( window.location.hash ) {
+			window.scrollBy( 0, -32 );
+		}
+
+		// Add no-font-face class to body if needed.
+		if (
+			navigator.userAgent &&
+			fontFaceRegex.test( navigator.userAgent ) &&
+			! hasClass( document.body, 'no-font-face' )
+		) {
+			addClass( document.body, 'no-font-face' );
+		}
+
+		// Clear sessionStorage on logging out.
+		if ( adminBarLogout ) {
+			adminBarLogout.addEventListener( 'click', emptySessionStorage );
+		}
+	} );
+
+	/**
+	 * Remove hover class for top level menu item when escape is pressed.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {Event} event The keydown event.
+	 */
+	function removeHoverIfEscape( event ) {
+		var wrapper;
+
+		if ( event.which !== 27 ) {
+			return;
+		}
+
+		wrapper = getClosest( event.target, '.menupop' );
+
+		if ( ! wrapper ) {
+			return;
+		}
+
+		wrapper.querySelector( '.menupop > .ab-item' ).focus();
+		removeClass( wrapper, 'hover' );
+	}
+
+	/**
+	 * Toggle hover class for top level menu item when enter is pressed.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {Event} event The keydown event.
+	 */
+	function toggleHoverIfEnter( event ) {
+		var wrapper;
+
+		if ( event.which !== 13 ) {
+			return;
+		}
+
+		if ( !! getClosest( event.target, '.ab-sub-wrapper' ) ) {
+			return;
+		}
+
+		wrapper = getClosest( event.target, '.menupop' );
+
+		if ( ! wrapper ) {
+			return;
+		}
+
+		event.preventDefault();
+
+		if ( hasClass( wrapper, 'hover' ) ) {
+			removeClass( wrapper, 'hover' );
+		} else {
+			addClass( wrapper, 'hover' );
+		}
+	}
+
+	/**
+	 * Focus the target of skip link after pressing Enter.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {Event} event The keydown event.
+	 */
+	function focusTargetAfterEnter( event ) {
+		var id, userAgent;
+
+		if ( event.which !== 13 ) {
+			return;
+		}
+
+		id = event.target.getAttribute( 'href' );
+		userAgent = navigator.userAgent.toLowerCase();
+
+		if ( userAgent.indexOf( 'applewebkit' ) > -1 && id && id.charAt( 0 ) === '#' ) {
+			setTimeout( function() {
+				var target = document.getElementById( id.replace( '#', '' ) );
+
+				if ( target ) {
+					target.setAttribute( 'tabIndex', '0' );
+					target.focus();
+				}
+			}, 100 );
+		}
+	}
+
+	/**
+	 * Toogle hover class for mobile devices.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {NodeList} topMenuItems All menu items.
+	 * @param {Event} event The click event.
+	 */
+	function mobileHover( topMenuItems, event ) {
+		var wrapper;
+
+		if ( !! getClosest( event.target, '.ab-sub-wrapper' ) ) {
+			return;
+		}
+
+		event.preventDefault();
+
+		wrapper = getClosest( event.target, '.menupop' );
+
+		if ( ! wrapper ) {
+			return;
+		}
+
+		if ( hasClass( wrapper, 'hover' ) ) {
+			removeClass( wrapper, 'hover' );
+		} else {
+			removeAllHoverClass( topMenuItems );
+			addClass( wrapper, 'hover' );
+		}
+	}
+
+	/**
+	 * Handles the click on the Shortlink link in the adminbar.
+	 *
+	 * @since 3.1.0
+	 * @since 5.3.1 Use querySelector to clean up the function.
+	 *
+	 * @param {Event} event The click event.
+	 * @return {boolean} Returns false to prevent default click behavior.
+	 */
+	function clickShortlink( event ) {
+		var wrapper = event.target.parentNode,
+			input;
+
+		if ( wrapper ) {
+			input = wrapper.querySelector( '.shortlink-input' );
+		}
+
+		if ( ! input ) {
+			return;
+		}
+
+		// (Old) IE doesn't support preventDefault, and does support returnValue.
+		if ( event.preventDefault ) {
+			event.preventDefault();
+		}
+
+		event.returnValue = false;
+
+		addClass( wrapper, 'selected' );
+
+		input.focus();
+		input.select();
+		input.onblur = function() {
+			removeClass( wrapper, 'selected' );
+		};
+
+		return false;
+	}
+
+	/**
+	 * Clear sessionStorage on logging out.
+	 *
+	 * @since 5.3.1
+	 */
+	function emptySessionStorage() {
+		if ( 'sessionStorage' in window ) {
+			try {
+				for ( var key in sessionStorage ) {
+					if ( key.indexOf( 'wp-autosave-' ) > -1 ) {
+						sessionStorage.removeItem( key );
+					}
+				}
+			} catch ( er ) {}
+		}
+	}
+
+	/**
+	 * Check if element has class.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {HTMLElement} element The HTML element.
+	 * @param {String}      className The class name.
+	 * @return {bool} Whether the element has the className.
+	 */
+	function hasClass( element, className ) {
+		var classNames;
+
+		if ( ! element ) {
+			return false;
+		}
+
+		if ( element.classList && element.classList.contains ) {
+			return element.classList.contains( className );
+		} else if ( element.className ) {
+			classNames = element.className.split( ' ' );
+			return classNames.indexOf( className ) > -1;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Add class to an element.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {HTMLElement} element The HTML element.
+	 * @param {String}      className The class name.
+	 */
+	function addClass( element, className ) {
+		if ( ! element ) {
+			return;
+		}
+
+		if ( element.classList && element.classList.add ) {
+			element.classList.add( className );
+		} else if ( ! hasClass( element, className ) ) {
+			if ( element.className ) {
+				element.className += ' ';
+			}
+
+			element.className += className;
+		}
+	}
+
+	/**
+	 * Remove class from an element.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {HTMLElement} element The HTML element.
+	 * @param {String}      className The class name.
+	 */
+	function removeClass( element, className ) {
+		var testName,
+			classes;
+
+		if ( ! element || ! hasClass( element, className ) ) {
+			return;
+		}
+
+		if ( element.classList && element.classList.remove ) {
+			element.classList.remove( className );
+		} else {
+			testName = ' ' + className + ' ';
+			classes = ' ' + element.className + ' ';
+
+			while ( classes.indexOf( testName ) > -1 ) {
+				classes = classes.replace( testName, '' );
+			}
+
+			element.className = classes.replace( /^[\s]+|[\s]+$/g, '' );
+		}
+	}
+
+	/**
+	 * Remove hover class for all menu items.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {NodeList} topMenuItems All menu items.
+	 */
+	function removeAllHoverClass( topMenuItems ) {
+		if ( topMenuItems && topMenuItems.length ) {
+			for ( var i = 0; i < topMenuItems.length; i++ ) {
+				removeClass( topMenuItems[i], 'hover' );
+			}
+		}
+	}
+
+	/**
+	 * Scrolls to the top of the page.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param {Event} event The Click event.
+	 *
+	 * @return {void}
+	 */
+	function scrollToTop( event ) {
+		// Only scroll when clicking on the wpadminbar, not on menus or submenus.
+		if (
+			event.target &&
+			event.target.id !== 'wpadminbar' &&
+			event.target.id !== 'wp-admin-bar-top-secondary'
+		) {
+			return;
+		}
+
+		try {
+			window.scrollTo( {
+				top: -32,
+				left: 0,
+				behavior: 'smooth'
+			} );
+		} catch ( er ) {
+			window.scrollTo( 0, -32 );
+		}
+	}
+
+	/**
+	 * Get closest Element.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param {HTMLElement} el Element to get parent.
+	 * @param {string} selector CSS selector to match.
+	 */
+	function getClosest( el, selector ) {
+		if ( ! window.Element.prototype.matches ) {
+			// Polyfill from https://developer.mozilla.org/en-US/docs/Web/API/Element/matches.
+			window.Element.prototype.matches =
+				window.Element.prototype.matchesSelector ||
+				window.Element.prototype.mozMatchesSelector ||
+				window.Element.prototype.msMatchesSelector ||
+				window.Element.prototype.oMatchesSelector ||
+				window.Element.prototype.webkitMatchesSelector ||
+				function( s ) {
+					var matches = ( this.document || this.ownerDocument ).querySelectorAll( s ),
+						i = matches.length;
+
+					while ( --i >= 0 && matches.item( i ) !== this ) { }
+
+					return i > -1;
+				};
+		}
+
+		// Get the closest matching elent.
+		for ( ; el && el !== document; el = el.parentNode ) {
+			if ( el.matches( selector ) ) {
+				return el;
+			}
+		}
+
+		return null;
+	}
+
+} )( document, window, navigator );

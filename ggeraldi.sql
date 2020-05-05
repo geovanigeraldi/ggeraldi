@@ -19,10 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `indicosa_ggeraldi`
+-- Banco de dados: `geraldic_ggeraldi`
 --
-CREATE DATABASE IF NOT EXISTS `indicosa_ggeraldi` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `indicosa_ggeraldi`;
+CREATE DATABASE IF NOT EXISTS `geraldic_ggeraldi` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `geraldic_ggeraldi`;
 
 -- --------------------------------------------------------
 

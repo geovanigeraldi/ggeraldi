@@ -16,7 +16,7 @@
 
 // ** Configurações do MySQL - Você pode pegar essas informações com o serviço de hospedagem ** //
 /** O nome do banco de dados do WordPress */
-define('DB_NAME', 'ggeraldi');
+define('DB_NAME', 'geraldic_ggeraldi');
 
 /** Usuário do banco de dados MySQL */
 define('DB_USER', 'root');

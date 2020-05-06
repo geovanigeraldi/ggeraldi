@@ -1,0 +1,27 @@
+.editor-styles-wrapper p.has-large-font-size.editor-rich-text__tinymce,
+.editor-styles-wrapper p.has-large-font-size.editor-rich-text__tinymce.mce-content-body,
+.editor-styles-wrapper p.has-larger-font-size.editor-rich-text__tinymce,
+.editor-styles-wrapper p.has-larger-font-size.editor-rich-text__tinymce.mce-content-body {
+	line-height:1.4;
+	}
+.editor-styles-wrapper p.has-small-font-size {
+	font-size:.1;
+}
+.editor-styles-wrapper p.has-normal-font-size,
+.editor-styles-wrapper p.has-regular-font-size {
+	font-size:1em;
+}
+
+.editor-styles-wrapper p.has-medium-font-size {
+	font-size:1.1em;
+	}
+
+.editor-styles-wrapper p.has-large-font-size {
+	font-size:1.25em;
+
+}
+
+.editor-styles-wrapper p.has-larger-font-size {
+
+	font-size:1.5em;
+}

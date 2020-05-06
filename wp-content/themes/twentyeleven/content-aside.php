@@ -1,8 +1,10 @@
 <?php
 /**
- * The template for displaying posts in the Aside Post Format on index and archive pages
+ * Template for displaying posts in the Aside Post Format
  *
- * Learn more: http://codex.wordpress.org/Post_Formats
+ * Used on index and archive pages.
+ *
+ * @link https://wordpress.org/support/article/post-formats/
  *
  * @package WordPress
  * @subpackage Twenty_Eleven
@@ -13,7 +15,7 @@
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<header class="entry-header">
 			<hgroup>
-				<h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'twentyeleven' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
+				<h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 				<h3 class="entry-format"><?php _e( 'Aside', 'twentyeleven' ); ?></h3>
 			</hgroup>
 
@@ -24,14 +26,21 @@
 			<?php endif; ?>
 		</header><!-- .entry-header -->
 
-		<?php if ( is_search() ) : // Only display Excerpts for Search ?>
+		<?php if ( is_search() ) : // Only display excerpts for search. ?>
 		<div class="entry-summary">
 			<?php the_excerpt(); ?>
 		</div><!-- .entry-summary -->
 		<?php else : ?>
 		<div class="entry-content">
 			<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) ); ?>
-			<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
+			<?php
+			wp_link_pages(
+				array(
+					'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>',
+					'after'  => '</div>',
+				)
+			);
+			?>
 		</div><!-- .entry-content -->
 		<?php endif; ?>
 
@@ -42,5 +51,5 @@
 			<span class="comments-link"><?php comments_popup_link( '<span class="leave-reply">' . __( 'Leave a reply', 'twentyeleven' ) . '</span>', __( '<b>1</b> Reply', 'twentyeleven' ), __( '<b>%</b> Replies', 'twentyeleven' ) ); ?></span>
 			<?php endif; ?>
 			<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
-		</footer><!-- #entry-meta -->
+		</footer><!-- .entry-meta -->
 	</article><!-- #post-<?php the_ID(); ?> -->

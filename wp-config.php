@@ -37,6 +37,14 @@ define( 'DB_CHARSET', 'utf8mb4' );
 /** O tipo de Collate do banco de dados. Não altere isso se tiver dúvidas. */
 define( 'DB_COLLATE', '' );
 
+/** localhost */
+define('WP_HOME','http://localhost/ggeraldi');
+define('WP_SITEURL','http://localhost/ggeraldi');
+/** localhost */
+/** atualizar em localhost */
+define('FS_METHOD','direct');
+/** atualizar em localhost */
+
 /**#@+
  * Chaves únicas de autenticação e salts.
  *
